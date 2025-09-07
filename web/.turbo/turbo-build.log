@@ -1,0 +1,72 @@
+
+
+> web@0.1.0 build /Users/anshumansingh/Documents/products/raj-milan/apps/web
+> next build
+
+   [1m[38;2;173;127;168m▲ Next.js 15.3.2[39m[22m
+   - Environments: .env
+
+ [37m[1m [22m[39m Creating an optimized production build ...
+ [32m[1m✓[22m[39m Compiled successfully in 10.0s
+[?25l [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m...[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m.[39m[2K[1G [37m[1m [22m[39m Linting and checking validity of types  [36m..[39m[2K[1G[?25h [37m[1m [22m[39m Linting and checking validity of types     [32m[1m✓[22m[39m Linting and checking validity of types 
+[?25l [37m[1m [22m[39m Collecting page data  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting page data  [36m..[39m[2K[1G[?25h [37m[1m [22m[39m Collecting page data     [32m[1m✓[22m[39m Collecting page data 
+[?25l [37m[1m [22m[39m Generating static pages (0/14)  [36m[    ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/14)  [36m[=   ][39m[2K[1G [37m[1m [22m[39m Generating static pages (0/14)  [36m[==  ][39m[2K[1G [37m[1m [22m[39m Generating static pages (8/14)  [36m[=== ][39m[2K[1G[?25hvalue and type-->  text
+value and type-->  text
+value and type-->  text
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  date
+value and type-->  select
+value and type-->  select
+value and type-->  text
+value and type-->  text
+value and type-->  text
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  textarea
+value and type-->  text
+value and type-->  text
+value and type-->  text
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  textarea
+value and type-->  text
+value and type-->  text
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  select
+value and type-->  text
+value and type-->  textarea
+[?25h [32m[1m✓[22m[39m Generating static pages (14/14)
+[?25l [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[?25l [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m.[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m.[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m..[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m..[39m[2K[1G [37m[1m [22m[39m Finalizing page optimization  [36m...[39m[2K[1G [37m[1m [22m[39m Collecting build traces  [36m...[39m[2K[1G[?25h [37m[1m [22m[39m Collecting build traces     [32m[1m✓[22m[39m Collecting build traces 
+[2K[1G[?25h [37m[1m [22m[39m Finalizing page optimization     [32m[1m✓[22m[39m Finalizing page optimization 
+
+[4mRoute (app)[24m                                 [4mSize[24m  [4mFirst Load JS[24m  [4m[24m  [4m[24m
+┌ ○ /                                    2.61 kB         [37m[1m151 kB[22m[39m
+├ ○ /_not-found                            990 B         [37m[1m103 kB[22m[39m
+├ ○ /about                               3.65 kB         [37m[1m231 kB[22m[39m
+├ ○ /auth/login                          5.42 kB         [37m[1m293 kB[22m[39m
+├ ○ /auth/signup                         7.65 kB         [37m[1m327 kB[22m[39m
+├ ○ /blog                                15.2 kB         [37m[1m293 kB[22m[39m
+├ ○ /home                                3.83 kB         [37m[1m236 kB[22m[39m
+├ ○ /my-profile                          5.61 kB         [37m[1m390 kB[22m[39m
+├ ○ /privacy-policy                      10.6 kB         [37m[1m245 kB[22m[39m
+├ ○ /profile-setup                         19 kB         [37m[1m369 kB[22m[39m
+├ ƒ /profile/[userId]                    3.74 kB         [37m[1m388 kB[22m[39m
+└ ○ /terms-and-condition                 3.97 kB         [37m[1m239 kB[22m[39m
++ First Load JS shared by all             [37m[1m102 kB[22m[39m
+  ├ chunks/1684-4a3ffd147f32ae24.js      46.4 kB
+  ├ chunks/4bd1b696-f32530c3a24d9e9a.js  53.2 kB
+  └ other shared chunks (total)          1.93 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+[?25h
