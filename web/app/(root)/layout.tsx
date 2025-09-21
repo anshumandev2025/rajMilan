@@ -21,6 +21,7 @@ export default function RootLayout({
   const pathname = usePathname();
   useEffect(() => {
     const token = localStorage.getItem("authToken");
+    console.log("hihiih", pathname);
     if (token && token.length > 0) {
       setIsUserLogIn(true);
     } else {

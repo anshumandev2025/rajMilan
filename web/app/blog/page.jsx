@@ -165,7 +165,9 @@ const BlogsPage = () => {
           <Text className="text-gray-600">
             Showing {currentBlogs.length} of {filteredBlogs.length} blogs
             {selectedCategory !== "all" &&
-              ` in ${categories.find((c) => c.value === selectedCategory)?.label}`}
+              ` in ${
+                categories.find((c) => c.value === selectedCategory)?.label
+              }`}
             {searchTerm && ` matching "${searchTerm}"`}
           </Text>
         </div>
@@ -265,7 +267,7 @@ const BlogsPage = () => {
             </Paragraph>
             <Button
               type="primary"
-              className="bg-red-800 hover:bg-red-700 border-red-800"
+              className="bg-red-800 text-white hover:bg-red-700 border-red-800"
               onClick={() => {
                 setSearchTerm("");
                 setSelectedCategory("all");

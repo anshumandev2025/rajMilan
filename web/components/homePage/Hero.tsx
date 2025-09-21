@@ -2,10 +2,21 @@
 import { useUser } from "@/store/userStore";
 import { Button } from "antd";
 import Link from "next/link";
-import React from "react";
+import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
 
 const Hero = () => {
-  const { isUserLogIn } = useUser();
+  const { isUserLogIn, setIsUserLogIn } = useUser();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token && token.length > 0) {
+      setIsUserLogIn(true);
+    } else {
+      setIsUserLogIn(false);
+    }
+  }, [pathname]);
   return (
     <section className="relative h-[600px] md:h-[700px] flex items-center">
       <div className="absolute inset-0 bg-[url('/images/heroImage.jpeg')] bg-cover bg-center">
@@ -22,7 +33,7 @@ const Hero = () => {
             community
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {isUserLogIn && (
+            {!isUserLogIn && (
               <>
                 <Link href="/auth/signup">
                   <Button
