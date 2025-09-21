@@ -122,6 +122,13 @@ export class UserService {
     galleryImages?: Express.Multer.File[] | null,
   ) {
     try {
+      console.log('profileImage--->', profileImage);
+      await this.updateUserImages(
+        userId,
+        profileImage ?? [],
+        galleryImages ?? [], // fallback to empty array
+        updateUserDetailsDto.fullName,
+      );
       let updatedUser = await this.userModel.findByIdAndUpdate(
         userId,
         {
@@ -130,12 +137,6 @@ export class UserService {
         {
           new: true,
         },
-      );
-      await this.updateUserImages(
-        userId,
-        profileImage ?? [],
-        galleryImages ?? [], // fallback to empty array
-        updateUserDetailsDto.fullName,
       );
       return updatedUser;
     } catch (error) {
@@ -165,17 +166,23 @@ export class UserService {
 
       // ✅ Update Profile Image if provided
       if (profileImage && profileImage.length > 0) {
-        const profileImageKey = await this.s3Service.getS3KeyFromUrl(
-          user.profileImage,
-        );
-
-        const updated = await this.s3Service.updateFile(
-          profileImageKey.replace('%20', ' '),
-          profileImage[0],
-        );
-
-        profileImageUrl = updated.url;
-        updateData.profileImage = profileImageUrl;
+        if (!user.profileImage) {
+          const profileUser = await this.s3Service.uploadFile(
+            profileImage[0],
+            `${fullName}_profile`,
+          );
+          updateData.profileImage = profileUser.url;
+        } else {
+          const profileImageKey = await this.s3Service.getS3KeyFromUrl(
+            user.profileImage,
+          );
+          const updated = await this.s3Service.updateFile(
+            profileImageKey.replace('%20', ' '),
+            profileImage[0],
+          );
+          profileImageUrl = updated.url;
+          updateData.profileImage = profileImageUrl;
+        }
       }
       // ✅ Upload & Append Gallery Images
       if (galleryImages && galleryImages.length > 0) {
@@ -264,7 +271,9 @@ export class UserService {
   async getAllMatches(userId: string) {
     const users = await this.userModel
       .find({ _id: { $ne: userId } })
-      .select('_id fullName age location subCast profession profileImage')
+      .select(
+        '_id fullName age location subCast profession profileImage gender',
+      )
       .exec();
 
     return users;

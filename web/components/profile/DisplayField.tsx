@@ -26,9 +26,8 @@ const DisplayField: React.FC<Props> = ({
   onChange,
   rules = [],
 }) => {
-  console.log("value and type-->", value, type);
   return (
-    <div className="mb-4">
+    <div className="">
       <label className="block text-sm font-semibold text-gray-600 mb-2">
         {label}
       </label>

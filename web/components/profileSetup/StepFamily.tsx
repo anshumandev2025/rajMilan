@@ -5,7 +5,6 @@ import {
   familyTypesConstant,
   familyValuesConstant,
   siblingOptionsConstant,
-  gotraOptionsConstant,
 } from "@/constants/dataConstant";
 import { useProfileStore } from "@/store/profileStore";
 
@@ -21,17 +20,14 @@ const StepFamily = ({ form }: { form: any }) => {
       motherGotra,
       paternalGrandfatherName,
       paternalGrandfatherOccupation,
-      paternalGrandfatherGotra,
       paternalGrandmotherName,
       paternalGrandmotherGotra,
       maternalGrandfatherName,
       maternalGrandfatherOccupation,
-      maternalGrandfatherGotra,
       maternalGrandmotherName,
       maternalGrandmotherGotra,
       paternalVillage,
       maternalVillage,
-      gotra,
       siblingsCount,
       familyType,
       familyValues,
@@ -39,45 +35,106 @@ const StepFamily = ({ form }: { form: any }) => {
     } = form.getFieldsValue();
 
     form.setFieldsValue({
-      fatherName: fatherName || profileData.fatherName,
-      fatherOccupation: fatherOccupation || profileData.fatherOccupation,
-      fatherGotra: fatherGotra || profileData.fatherGotra,
-      motherName: motherName || profileData.motherName,
-      motherOccupation: motherOccupation || profileData.motherOccupation,
-      motherGotra: motherGotra || profileData.motherGotra,
-      paternalGrandfatherName:
-        paternalGrandfatherName || profileData.paternalGrandfatherName,
-      paternalGrandfatherOccupation:
-        paternalGrandfatherOccupation ||
-        profileData.paternalGrandfatherOccupation,
-      maternalGrandfatherName:
-        maternalGrandfatherName || profileData.maternalGrandfatherName,
-      maternalGrandfatherOccupation:
-        maternalGrandfatherOccupation ||
-        profileData.maternalGrandfatherOccupation,
-      maternalGrandfatherGotra:
-        maternalGrandfatherGotra || profileData.maternalGrandfatherGotra,
-      maternalGrandmotherName:
-        maternalGrandmotherName || profileData.maternalGrandmotherName,
-      maternalGrandmotherGotra:
-        maternalGrandmotherGotra || profileData.maternalGrandmotherGotra,
-      paternalVillage: paternalVillage || profileData.paternalVillage,
-      maternalVillage: maternalVillage || profileData.maternalVillage,
-      gotra: gotra || profileData.gotra,
-      siblingsCount: siblingsCount || profileData.siblingsCount,
-      familyType: familyType || profileData.familyType,
-      familyValues: familyValues || profileData.familyValues,
-      aboutFamilyBackground:
-        aboutFamilyBackground || profileData.aboutFamilyBackground,
+      fatherName: fatherName
+        ? fatherName
+        : profileData.fatherName
+        ? profileData.fatherName
+        : null,
+      fatherOccupation: fatherOccupation
+        ? fatherOccupation
+        : profileData.fatherOccupation
+        ? profileData.fatherOccupation
+        : null,
+      fatherGotra: fatherGotra
+        ? fatherGotra
+        : profileData.fatherGotra
+        ? profileData.fatherGotra
+        : null,
+      motherName: motherName
+        ? motherName
+        : profileData.motherName
+        ? profileData.motherName
+        : null,
+      motherOccupation: motherOccupation
+        ? motherOccupation
+        : profileData.motherOccupation
+        ? profileData.motherOccupation
+        : null,
+      motherGotra: motherGotra
+        ? motherGotra
+        : profileData.motherGotra
+        ? profileData.motherGotra
+        : null,
+      paternalGrandfatherName: paternalGrandfatherName
+        ? paternalGrandfatherName
+        : profileData.paternalGrandfatherName
+        ? profileData.paternalGrandfatherName
+        : null,
+      paternalGrandfatherOccupation: paternalGrandfatherOccupation
+        ? paternalGrandfatherOccupation
+        : profileData.paternalGrandfatherOccupation
+        ? profileData.paternalGrandfatherOccupation
+        : null,
+      maternalGrandfatherName: maternalGrandfatherName
+        ? maternalGrandfatherName
+        : profileData.maternalGrandfatherName
+        ? profileData.maternalGrandfatherName
+        : null,
+      maternalGrandfatherOccupation: maternalGrandfatherOccupation
+        ? maternalGrandfatherOccupation
+        : profileData.maternalGrandfatherOccupation
+        ? profileData.maternalGrandfatherOccupation
+        : null,
+      maternalGrandmotherName: maternalGrandmotherName
+        ? maternalGrandfatherName
+        : profileData.maternalGrandmotherName
+        ? profileData.maternalGrandmotherName
+        : null,
+      maternalGrandmotherGotra: maternalGrandmotherGotra
+        ? maternalGrandmotherGotra
+        : profileData.maternalGrandmotherGotra
+        ? profileData.maternalGrandmotherGotra
+        : null,
+      paternalVillage: paternalVillage
+        ? paternalVillage
+        : profileData.paternalVillage
+        ? profileData.paternalVillage
+        : null,
+      maternalVillage: maternalVillage
+        ? maternalVillage
+        : profileData.maternalVillage
+        ? profileData.maternalVillage
+        : null,
+      siblingsCount: siblingsCount
+        ? siblingsCount
+        : profileData.siblingsCount
+        ? profileData.siblingsCount
+        : null,
+      familyType: familyType
+        ? familyType
+        : profileData.familyType
+        ? profileData.familyType
+        : null,
+      familyValues: familyValues
+        ? familyValues
+        : profileData.familyValues
+        ? profileData.familyValues
+        : null,
+      aboutFamilyBackground: aboutFamilyBackground
+        ? aboutFamilyBackground
+        : profileData.aboutFamilyBackground
+        ? profileData.aboutFamilyBackground
+        : null,
       paternalGrandmotherName: paternalGrandmotherName
         ? paternalGrandmotherName
-        : profileData.paternalGrandmotherName,
-      paternalGrandfatherGotra: paternalGrandfatherGotra
-        ? paternalGrandfatherGotra
-        : profileData.paternalGrandfatherGotra,
+        : profileData.paternalGrandmotherName
+        ? profileData.paternalGrandfatherName
+        : null,
       paternalGrandmotherGotra: paternalGrandmotherGotra
         ? paternalGrandmotherGotra
-        : profileData.paternalGrandmotherGotra,
+        : profileData.paternalGrandmotherGotra
+        ? profileData.paternalGrandmotherGotra
+        : null,
     });
   }, [form, profileData]);
 
@@ -87,65 +144,25 @@ const StepFamily = ({ form }: { form: any }) => {
       <h3 className="mt-4 mb-2 font-semibold text-gray-700">Parents</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Father */}
-        <Form.Item
-          label="Father's Name"
-          name="fatherName"
-          rules={[{ required: true, message: "Please enter father's name" }]}
-        >
+        <Form.Item label="Father's Name" name="fatherName">
           <Input placeholder="Enter father's name" />
         </Form.Item>
-        <Form.Item
-          label="Father's Occupation"
-          name="fatherOccupation"
-          rules={[
-            { required: true, message: "Please enter father's occupation" },
-          ]}
-        >
+        <Form.Item label="Father's Occupation" name="fatherOccupation">
           <Input placeholder="Enter father's occupation" />
         </Form.Item>
-        <Form.Item
-          label="Father's Gotra"
-          name="fatherGotra"
-          rules={[{ required: true, message: "Please select father's Gotra" }]}
-        >
-          <Select placeholder="Select father's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
+        <Form.Item label="Father's Gotra" name="fatherGotra">
+          <Input placeholder="Enter father's gotra" />
         </Form.Item>
 
         {/* Mother */}
-        <Form.Item
-          label="Mother's Name"
-          name="motherName"
-          rules={[{ required: true, message: "Please enter mother's name" }]}
-        >
+        <Form.Item label="Mother's Name" name="motherName">
           <Input placeholder="Enter mother's name" />
         </Form.Item>
-        <Form.Item
-          label="Mother's Occupation"
-          name="motherOccupation"
-          rules={[
-            { required: true, message: "Please enter mother's occupation" },
-          ]}
-        >
+        <Form.Item label="Mother's Occupation" name="motherOccupation">
           <Input placeholder="Enter mother's occupation" />
         </Form.Item>
-        <Form.Item
-          label="Mother's Gotra"
-          name="motherGotra"
-          rules={[{ required: true, message: "Please select mother's Gotra" }]}
-        >
-          <Select placeholder="Select mother's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
+        <Form.Item label="Mother's Gotra" name="motherGotra">
+          <Input placeholder="Enter mother's gotra" />
         </Form.Item>
       </div>
 
@@ -156,12 +173,6 @@ const StepFamily = ({ form }: { form: any }) => {
         <Form.Item
           label="Paternal Grandfather's Name"
           name="paternalGrandfatherName"
-          rules={[
-            {
-              required: true,
-              message: "Please enter paternal grandfather's name",
-            },
-          ]}
         >
           <Input placeholder="Enter paternal grandfather's name" />
         </Form.Item>
@@ -170,18 +181,6 @@ const StepFamily = ({ form }: { form: any }) => {
           name="paternalGrandfatherOccupation"
         >
           <Input placeholder="Enter paternal grandfather's occupation" />
-        </Form.Item>
-        <Form.Item
-          label="Paternal Grandfather's Gotra"
-          name="paternalGrandfatherGotra"
-        >
-          <Select placeholder="Select paternal grandfather's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
         </Form.Item>
 
         {/* Paternal Grandmother */}
@@ -195,25 +194,13 @@ const StepFamily = ({ form }: { form: any }) => {
           label="Paternal Grandmother's Gotra"
           name="paternalGrandmotherGotra"
         >
-          <Select placeholder="Select paternal grandmother's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
+          <Input placeholder="Enter paternal grandmother's gotra" />
         </Form.Item>
 
         {/* Maternal Grandfather */}
         <Form.Item
           label="Maternal Grandfather's Name"
           name="maternalGrandfatherName"
-          rules={[
-            {
-              required: true,
-              message: "Please enter maternal grandfather's name",
-            },
-          ]}
         >
           <Input placeholder="Enter maternal grandfather's name" />
         </Form.Item>
@@ -222,18 +209,6 @@ const StepFamily = ({ form }: { form: any }) => {
           name="maternalGrandfatherOccupation"
         >
           <Input placeholder="Enter maternal grandfather's occupation" />
-        </Form.Item>
-        <Form.Item
-          label="Maternal Grandfather's Gotra"
-          name="maternalGrandfatherGotra"
-        >
-          <Select placeholder="Select maternal grandfather's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
         </Form.Item>
 
         {/* Maternal Grandmother */}
@@ -247,60 +222,24 @@ const StepFamily = ({ form }: { form: any }) => {
           label="Maternal Grandmother's Gotra"
           name="maternalGrandmotherGotra"
         >
-          <Select placeholder="Select maternal grandmother's gotra">
-            {gotraOptionsConstant.map((gotra) => (
-              <Select.Option key={gotra.value} value={gotra.value}>
-                {gotra.label}
-              </Select.Option>
-            ))}
-          </Select>
+          <Input placeholder="Enter maternal grandmother gotra" />
         </Form.Item>
       </div>
 
       {/* Village Details */}
       <h3 className="mt-6 mb-2 font-semibold text-gray-700">Village Details</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Form.Item
-          label="Paternal Village"
-          name="paternalVillage"
-          rules={[{ required: true, message: "Please enter paternal village" }]}
-        >
+        <Form.Item label="Paternal Village" name="paternalVillage">
           <Input placeholder="Enter paternal village" />
         </Form.Item>
-        <Form.Item
-          label="Maternal Village"
-          name="maternalVillage"
-          rules={[{ required: true, message: "Please enter maternal village" }]}
-        >
+        <Form.Item label="Maternal Village" name="maternalVillage">
           <Input placeholder="Enter maternal village" />
         </Form.Item>
       </div>
 
-      {/* Personal Gotra */}
-      <Form.Item
-        label="Your Gotra"
-        name="gotra"
-        rules={[{ required: true, message: "Please select your Gotra" }]}
-        className="mt-6"
-      >
-        <Select placeholder="Select your gotra">
-          {gotraOptionsConstant.map((gotra) => (
-            <Select.Option key={gotra.value} value={gotra.value}>
-              {gotra.label}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
-
       {/* Siblings, Family Type, Values */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-        <Form.Item
-          label="Number of Siblings"
-          name="siblingsCount"
-          rules={[
-            { required: true, message: "Please select the number of siblings" },
-          ]}
-        >
+        <Form.Item label="Number of Siblings" name="siblingsCount">
           <Select placeholder="Select number">
             {siblingOptionsConstant.map((option) => (
               <Select.Option key={option.value} value={option.value}>
@@ -309,13 +248,7 @@ const StepFamily = ({ form }: { form: any }) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item
-          label="Family Type"
-          name="familyType"
-          rules={[
-            { required: true, message: "Please select your family type" },
-          ]}
-        >
+        <Form.Item label="Family Type" name="familyType">
           <Select placeholder="Select family type">
             {familyTypesConstant.map((type) => (
               <Select.Option key={type.value} value={type.value}>
@@ -327,14 +260,7 @@ const StepFamily = ({ form }: { form: any }) => {
       </div>
 
       {/* Family Values & Background */}
-      <Form.Item
-        label="Family Values"
-        name="familyValues"
-        rules={[
-          { required: true, message: "Please select your family values" },
-        ]}
-        className="mt-4"
-      >
+      <Form.Item label="Family Values" name="familyValues" className="mt-4">
         <Select placeholder="Select family values">
           {familyValuesConstant.map((value) => (
             <Select.Option key={value.value} value={value.value}>

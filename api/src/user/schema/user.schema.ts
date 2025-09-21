@@ -85,8 +85,6 @@ export class User extends Document {
 
   @Prop()
   paternalGrandfatherOccupation: string;
-  @Prop()
-  paternalGrandfatherGotra: string;
 
   @Prop()
   paternalGrandmotherName: string;
@@ -99,9 +97,6 @@ export class User extends Document {
 
   @Prop()
   maternalGrandfatherOccupation: string;
-
-  @Prop()
-  maternalGrandfatherGotra: string;
 
   @Prop()
   maternalGrandmotherName: string;

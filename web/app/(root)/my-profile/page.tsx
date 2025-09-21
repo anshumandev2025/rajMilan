@@ -1,18 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Card, Row, Col, message, Modal, UploadFile, Form } from "antd";
-import {
-  UserOutlined,
-  BankOutlined,
-  TeamOutlined,
-  HeartOutlined,
-  CoffeeOutlined,
-} from "@ant-design/icons";
+import { Card, Modal, UploadFile, Form, message } from "antd";
 import ProfileHeader from "@/components/profile/ProfileHeader";
-import ProfileSection from "@/components/profile/ProfileSection";
 import DisplayField from "@/components/profile/DisplayField";
 import PhotoGallery from "@/components/profile/PhotoGallery";
 import {
+  bodyTypeOptionConstant,
   casteOptionsConstant,
   dietPreferenceConstant,
   educationLevelsConstant,
@@ -22,6 +15,7 @@ import {
   habitOptionConstant,
   heightConstant,
   incomeRangesConstant,
+  jobProfileOptionConstant,
   locationOptionsConstant,
   siblingOptionsConstant,
 } from "@/constants/dataConstant";
@@ -45,19 +39,10 @@ const ProfilePage: React.FC = () => {
   const { updateProfile, profileData: profileDataStore } = useProfileStore();
   const [galleryFileList, setGalleryFileList] = useState<UploadFile[]>([]);
   const [form] = Form.useForm();
-  // const fetchProfileData = async () => {
-  //   try {
-  //     const response = await apiClient("/user");
-  //     setProfileData(response.data);
-  //     setEditedData(response.data);
-  //   } catch (error) {
-  //     console.log("error-->", error);
-  //   }
-  // };
   useEffect(() => {
     setProfileData(profileDataStore);
     setEditedData(profileDataStore);
-  }, [profileData]);
+  }, [profileDataStore]);
 
   useEffect(() => {
     if (isEditMode) {
@@ -141,7 +126,9 @@ const ProfilePage: React.FC = () => {
       setIsLoading(true);
       // 1. Validate form fields
       const values = await form.validateFields();
-      values.dateOfBirth = values.dateOfBirth.toISOString();
+      values.dateOfBirth = values.dateOfBirth
+        ? values.dateOfBirth.toISOString()
+        : null;
       // 2. Construct payload to match API format
       const formData = new FormData();
 
@@ -176,8 +163,9 @@ const ProfilePage: React.FC = () => {
         },
       });
       updateProfile(response.data);
+      setGalleryFileList([]);
       setIsEditMode(false);
-      console.log("✅ Profile updated successfully");
+      message.success("Profile updated successfully");
     } catch (errorInfo) {
       console.log("❌ Validation Failed or Upload Error:", errorInfo);
     } finally {
@@ -186,7 +174,7 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="p-4 min-h-screen bg-white">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <ProfileHeader
@@ -202,6 +190,7 @@ const ProfilePage: React.FC = () => {
           loading={isLoading}
           profileFileList={profileFileList}
           onProfileImageChange={handleProfileImageChange}
+          bioData={editedData.bioDataPdf}
         />
         <Form
           layout="vertical"
@@ -209,601 +198,571 @@ const ProfilePage: React.FC = () => {
           onFinish={handleFormSubmit} // your submission logic
           initialValues={editedData} // populate with current values
         >
-          <Row gutter={[24, 24]}>
-            <Col xs={24} lg={12}>
-              {/* Personal Information */}
-              <ProfileSection
-                title="Personal Information"
-                icon={<UserOutlined />}
-              >
-                <DisplayField
-                  label="Full Name"
-                  field="fullName"
-                  value={editedData.fullName}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please enter your full name" },
-                    { min: 2, message: "Name must be at least 2 characters" },
-                    {
-                      pattern: /^[a-zA-Z\s]+$/,
-                      message: "Name must contain only letters",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Email Address"
-                  field="emailAddress"
-                  value={editedData.emailAddress}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please enter your email" },
-                    {
-                      type: "email",
-                      message: "Please enter a valid email address",
-                    },
-                  ]}
-                />
+          <div className="flex flex-col space-y-10 mt-5">
+            <h1 className="text-left text-lg md:text-2xl font-bold">
+              Personl Information
+            </h1>
+            <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
+              <DisplayField
+                label="Full Name"
+                field="fullName"
+                value={editedData.fullName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  { required: true, message: "Please enter your full name" },
+                  { min: 2, message: "Name must be at least 2 characters" },
+                  {
+                    pattern: /^[a-zA-Z\s]+$/,
+                    message: "Name must contain only letters",
+                  },
+                ]}
+              />
 
-                <DisplayField
-                  label="Mobile number"
-                  field="mobileNumber"
-                  value={editedData.mobileNumber}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your mobile number",
-                    },
-                    {
-                      pattern: /^[0-9]{10}$/,
-                      message: "Mobile number must be 10 digits",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Email Address"
+                field="emailAddress"
+                value={editedData.emailAddress}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  { required: true, message: "Please enter your email" },
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address",
+                  },
+                ]}
+              />
 
-                <DisplayField
-                  label="Locatation"
-                  field="location"
-                  value={editedData.location}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={locationOptionsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your location",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Mobile number"
+                field="mobileNumber"
+                value={editedData.mobileNumber}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your mobile number",
+                  },
+                  {
+                    pattern: /^[0-9]{10}$/,
+                    message: "Mobile number must be 10 digits",
+                  },
+                ]}
+              />
 
-                <DisplayField
-                  label="Sub Cast"
-                  field="subCast"
-                  value={editedData.subCast}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={casteOptionsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your sub cast",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Locatation"
+                field="location"
+                value={editedData.location}
+                isEditMode={isEditMode}
+                type="select"
+                options={locationOptionsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select your location",
+                  },
+                ]}
+              />
 
-                <DisplayField
-                  label="Gender"
-                  field="gender"
-                  value={editedData.gender}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={genderOptionConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your gender",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Sub Cast"
+                field="subCast"
+                value={editedData.subCast}
+                isEditMode={isEditMode}
+                type="select"
+                options={casteOptionsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select your sub cast",
+                  },
+                ]}
+              />
 
-                <DisplayField
-                  label="Date of birth"
-                  field="dateOfBirth"
-                  value={editedData.dateOfBirth}
-                  isEditMode={isEditMode}
-                  type="date"
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your date of birth",
-                    },
-                    {
-                      //@ts-ignore
-                      validator: (_, value) => {
-                        if (!value) return Promise.resolve();
+              <DisplayField
+                label="Gender"
+                field="gender"
+                value={editedData.gender}
+                isEditMode={isEditMode}
+                type="select"
+                options={genderOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select your gender",
+                  },
+                ]}
+              />
 
-                        const dob = dayjs(value);
-                        const age = dayjs().diff(dob, "year");
+              <DisplayField
+                label="Date of birth"
+                field="dateOfBirth"
+                value={editedData.dateOfBirth}
+                isEditMode={isEditMode}
+                type="date"
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+                rules={[
+                  // {
+                  //   required: true,
+                  //   message: "Please select your date of birth",
+                  // },
+                  {
+                    //@ts-ignore
+                    validator: (_, value) => {
+                      if (!value) return Promise.resolve();
 
-                        if (age >= 18) {
-                          return Promise.resolve();
-                        }
-                        return Promise.reject(
-                          "You must be at least 18 years old"
-                        );
-                      },
-                    },
-                  ]}
-                />
+                      const dob = dayjs(value);
+                      const age = dayjs().diff(dob, "year");
 
-                <DisplayField
-                  label="Height"
-                  field="height"
-                  value={editedData.height}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={heightConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your height",
+                      if (age >= 18) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(
+                        "You must be at least 18 years old"
+                      );
                     },
-                  ]}
-                />
-              </ProfileSection>
-            </Col>
+                  },
+                ]}
+              />
 
-            <Col xs={24} lg={12}>
-              {/* Professional Information */}
-              <ProfileSection
-                title="Professional Information"
-                icon={<BankOutlined />}
-              >
-                <DisplayField
-                  label="Education Level"
-                  field="educationLevel"
-                  value={editedData.educationLevel}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={educationLevelsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your education level",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Degree or Specialialization"
-                  field="degreeOrSpecialialization"
-                  value={editedData.degreeOrSpecialialization}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your degree",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Job Title"
-                  field="jobTitleOrDesignation"
-                  value={editedData.jobTitleOrDesignation}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your job title",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Height"
+                field="height"
+                value={editedData.height}
+                isEditMode={isEditMode}
+                type="select"
+                options={heightConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="Company or organization"
-                  field="companyOrOrganization"
-                  value={editedData.companyOrOrganization}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your current company",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Annual Income"
-                  field="anualIncome"
-                  value={editedData.anualIncome}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={incomeRangesConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your annual income",
-                    },
-                  ]}
-                />
-              </ProfileSection>
-            </Col>
+              <DisplayField
+                label="Body Type"
+                field="bodyType"
+                value={editedData.bodyType}
+                isEditMode={isEditMode}
+                type="select"
+                options={bodyTypeOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-            <Col xs={24} lg={12}>
-              {/* LifeStyle Information */}
-              <ProfileSection
-                title="LifeStyle Information"
-                icon={<CoffeeOutlined />}
-              >
-                <DisplayField
-                  label="Diet Preference"
-                  field="dietPreference"
-                  value={editedData.dietPreference}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={dietPreferenceConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your diet preference",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Full Address"
+                field="fullAddress"
+                value={editedData.fullAddress}
+                isEditMode={isEditMode}
+                type="textarea"
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+            </div>
 
-                <DisplayField
-                  label="Smoking Habit"
-                  field="smokingHabit"
-                  value={editedData.smokingHabit}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={habitOptionConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your smoking habit",
-                    },
-                  ]}
-                />
+            <h1 className="text-left text-lg md:text-2xl font-bold">
+              Professional Information
+            </h1>
+            <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
+              <DisplayField
+                label="Education Level"
+                field="educationLevel"
+                value={editedData.educationLevel}
+                isEditMode={isEditMode}
+                type="select"
+                options={educationLevelsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Degree or Specialialization"
+                field="degreeOrSpecialialization"
+                value={editedData.degreeOrSpecialialization}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="Drinking Habit"
-                  field="drinkingHabit"
-                  value={editedData.drinkingHabit}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={habitOptionConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your drinking habit",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Job Profile"
+                field="jobProfile"
+                value={editedData.jobProfile}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Job Title"
+                field="jobTitleOrDesignation"
+                value={editedData.jobTitleOrDesignation}
+                isEditMode={isEditMode}
+                type="select"
+                options={jobProfileOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="About Hobby"
-                  field="aboutHobbyOrInterset"
-                  value={editedData.aboutHobbyOrInterset}
-                  isEditMode={isEditMode}
-                  type="textarea"
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please describe your hobbies" },
-                  ]}
-                />
-              </ProfileSection>
-            </Col>
+              <DisplayField
+                label="Company or organization"
+                field="companyOrOrganization"
+                value={editedData.companyOrOrganization}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Annual Income"
+                field="anualIncome"
+                value={editedData.anualIncome}
+                isEditMode={isEditMode}
+                type="select"
+                options={incomeRangesConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+            </div>
+            <h1 className="text-left text-lg md:text-2xl font-bold">
+              LifeStyle Information
+            </h1>
+            <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
+              <DisplayField
+                label="Diet Preference"
+                field="dietPreference"
+                value={editedData.dietPreference}
+                isEditMode={isEditMode}
+                type="select"
+                options={dietPreferenceConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-            <Col xs={24} lg={12}>
-              {/* Family Information */}
-              <ProfileSection
-                title="Family Information"
-                icon={<TeamOutlined />}
-              >
-                <DisplayField
-                  label="Father occupation"
-                  field="fatherOccupation"
-                  value={editedData.fatherOccupation}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter father's occupation",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Smoking Habit"
+                field="smokingHabit"
+                value={editedData.smokingHabit}
+                isEditMode={isEditMode}
+                type="select"
+                options={habitOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="Mother occupation"
-                  field="motherOccupation"
-                  value={editedData.motherOccupation}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter mother's occupation",
-                    },
-                  ]}
-                />
+              <DisplayField
+                label="Drinking Habit"
+                field="drinkingHabit"
+                value={editedData.drinkingHabit}
+                isEditMode={isEditMode}
+                type="select"
+                options={habitOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="GrandFather occupation"
-                  field="grandFatherOccupation"
-                  value={editedData.grandFatherOccupation}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your grandfather occupation",
-                    },
-                  ]} // optional
-                />
+              <DisplayField
+                label="About Hobby"
+                field="aboutHobbyOrInterset"
+                value={editedData.aboutHobbyOrInterset}
+                isEditMode={isEditMode}
+                type="textarea"
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+            </div>
 
-                <DisplayField
-                  label="Sibling Count"
-                  field="siblingsCount"
-                  value={editedData.siblingsCount}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={siblingOptionsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please select sibling count" },
-                  ]}
-                />
+            <h1 className="text-left text-lg md:text-2xl font-bold">
+              Family Information
+            </h1>
+            <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
+              <DisplayField
+                label="Father name"
+                field="fatherName"
+                value={editedData.fatherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="Family Type"
-                  field="familyType"
-                  value={editedData.familyType}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={familyTypesConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please select family type" },
-                  ]}
-                />
+              <DisplayField
+                label="Father occupation"
+                field="fatherOccupation"
+                value={editedData.fatherOccupation}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="Family Values"
-                  field="familyValues"
-                  value={editedData.familyValues}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={familyValuesConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    { required: true, message: "Please select family values" },
-                  ]}
-                />
+              <DisplayField
+                label="Father gotra"
+                field="fatherGotra"
+                value={editedData.fatherGotra}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-                <DisplayField
-                  label="About family background"
-                  field="aboutFamilyBackground"
-                  value={editedData.aboutFamilyBackground}
-                  isEditMode={isEditMode}
-                  type="textarea"
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[{ required: false }]} // optional
-                />
-              </ProfileSection>
-            </Col>
+              <DisplayField
+                label="Mother name"
+                field="motherName"
+                value={editedData.motherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
 
-            <Col xs={24} lg={12}>
-              {/* Partner Preferences */}
-              <ProfileSection
-                title="Partner Preferences"
-                icon={<HeartOutlined />}
-              >
-                <DisplayField
-                  label="Partner minimum age"
-                  field="partnerPreferedMinAge"
-                  value={editedData.partnerPreferedMinAge}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner min age",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner maximum age"
-                  field="partnerPreferedMaxAge"
-                  value={editedData.partnerPreferedMaxAge}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner max age",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner minimum height"
-                  field="partnerPreferedMinHeight"
-                  value={editedData.partnerPreferedMinHeight}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={heightConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner min height",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner maximum height"
-                  field="partnerPreferedMaxHeight"
-                  value={editedData.partnerPreferedMaxHeight}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={heightConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your max height",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner SubCast"
-                  field="partnerPreferedSubCast"
-                  value={editedData.partnerPreferedSubCast}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={casteOptionsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner sub cast",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner prefer city"
-                  field="partnerPreferedCity"
-                  value={editedData.partnerPreferedCity}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={locationOptionsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner prefer city",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner prefer education level"
-                  field="partnerPreferedEducationLevel"
-                  value={editedData.partnerPreferedEducationLevel}
-                  isEditMode={isEditMode}
-                  type="select"
-                  options={educationLevelsConstant}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please select your partner education level",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner prefered profession"
-                  field="partnerPreferedProfession"
-                  value={editedData.partnerPreferedProfession}
-                  isEditMode={isEditMode}
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please enter your partner prefered prefession",
-                    },
-                  ]}
-                />
-                <DisplayField
-                  label="Partner additional preference"
-                  field="partnerAdditionalPreference"
-                  value={editedData.partnerAdditionalPreference}
-                  isEditMode={isEditMode}
-                  type="textarea"
-                  onChange={
-                    handleInputChange as (field: string, value: string) => void
-                  }
-                />
-              </ProfileSection>
-            </Col>
-          </Row>
+              <DisplayField
+                label="Mother occupation"
+                field="motherOccupation"
+                value={editedData.motherOccupation}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Mother gotra"
+                field="motherGotra"
+                value={editedData.motherGotra}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Paternal Grandfather's Name"
+                field="paternalGrandfatherName"
+                value={editedData.paternalGrandfatherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Paternal Grandfather's Occupation"
+                field="paternalGrandfatherGotra"
+                value={editedData.paternalGrandfatherOccupation}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Paternal Grandmother's Name"
+                field="paternalGrandmotherName"
+                value={editedData.paternalGrandmotherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Paternal Grandmother's Gotra"
+                field="paternalGrandmotherGotra"
+                value={editedData.paternalGrandmotherGotra}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Maternal Grandfather's Name"
+                field="maternalGrandfatherName"
+                value={editedData.maternalGrandfatherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Maternal Grandfather's Occupation"
+                field="maternalGrandfatherOccupation"
+                value={editedData.maternalGrandfatherOccupation}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Maternal Grandmother's Name"
+                field="maternalGrandmotherName"
+                value={editedData.maternalGrandmotherName}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Maternal Grandmother's Gotra"
+                field="maternalGrandmotherGotra"
+                value={editedData.paternalGrandmotherGotra}
+                isEditMode={isEditMode}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Sibling Count"
+                field="siblingsCount"
+                value={editedData.siblingsCount}
+                isEditMode={isEditMode}
+                type="select"
+                options={siblingOptionsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Family Type"
+                field="familyType"
+                value={editedData.familyType}
+                isEditMode={isEditMode}
+                type="select"
+                options={familyTypesConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Family Values"
+                field="familyValues"
+                value={editedData.familyValues}
+                isEditMode={isEditMode}
+                type="select"
+                options={familyValuesConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="About family background"
+                field="aboutFamilyBackground"
+                value={editedData.aboutFamilyBackground}
+                isEditMode={isEditMode}
+                type="textarea"
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+            </div>
+
+            <h1 className="text-left text-lg md:text-2xl font-bold">
+              Partner Preferences
+            </h1>
+            <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
+              <DisplayField
+                label="Partner Prefered Body Type"
+                field="partnerPreferedBodyType"
+                value={editedData.partnerPreferedBodyType}
+                isEditMode={isEditMode}
+                type="select"
+                options={bodyTypeOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+
+              <DisplayField
+                label="Partner SubCast"
+                field="partnerPreferedSubCast"
+                value={editedData.partnerPreferedSubCast}
+                isEditMode={isEditMode}
+                type="select"
+                options={casteOptionsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Partner prefer city"
+                field="partnerPreferedCity"
+                value={editedData.partnerPreferedCity}
+                isEditMode={isEditMode}
+                type="select"
+                options={locationOptionsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Partner prefer education level"
+                field="partnerPreferedEducationLevel"
+                value={editedData.partnerPreferedEducationLevel}
+                isEditMode={isEditMode}
+                type="select"
+                options={educationLevelsConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Partner prefered profession"
+                field="partnerPreferedProfession"
+                value={editedData.partnerPreferedProfession}
+                isEditMode={isEditMode}
+                type="select"
+                options={jobProfileOptionConstant}
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+              <DisplayField
+                label="Partner additional preference"
+                field="partnerAdditionalPreference"
+                value={editedData.partnerAdditionalPreference}
+                isEditMode={isEditMode}
+                type="textarea"
+                onChange={
+                  handleInputChange as (field: string, value: string) => void
+                }
+              />
+            </div>
+          </div>
           <Card className="mt-6 shadow-lg border-0">
             {/* Photo gallery */}
             <PhotoGallery

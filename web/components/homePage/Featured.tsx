@@ -7,7 +7,7 @@ export const Featured = () => {
       <div className="container mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4 font-playfair">
-            Why Choose RajputMilan?
+            Why Choose RajMilan?
           </h2>
           <p className="text-lg text-gray-600">
             We understand Rajput traditions and values, offering you a platform

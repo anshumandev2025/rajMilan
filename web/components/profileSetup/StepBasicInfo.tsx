@@ -15,20 +15,34 @@ const StepBasicInfo = ({ form }: { form: any }) => {
     form.setFieldsValue({
       fullName: currentValues.fullName
         ? currentValues.fullName
-        : profileData.fullName,
-      gender: currentValues.gender ? currentValues.gender : profileData.gender,
+        : profileData.fullName
+        ? profileData.fullName
+        : null,
+      gender: currentValues.gender
+        ? currentValues.gender
+        : profileData.gender
+        ? profileData.gender
+        : null,
       dateOfBirth: currentValues.dateOfBirth
         ? dayjs(currentValues.dateOfBirth)
         : profileData.dateOfBirth
-          ? dayjs(profileData.dateOfBirth)
-          : null,
-      height: currentValues.height ? currentValues.height : profileData.height,
+        ? dayjs(profileData.dateOfBirth)
+        : null,
+      height: currentValues.height
+        ? currentValues.height
+        : profileData.height
+        ? profileData.height
+        : null,
       bodyType: currentValues.bodyType
         ? currentValues.bodyType
-        : profileData.bodyType,
+        : profileData.bodyType
+        ? profileData.bodyType
+        : null,
       fullAddress: currentValues.fullAddress
         ? currentValues.fullAddress
-        : profileData.fullAddress,
+        : profileData.fullAddress
+        ? profileData.fullAddress
+        : null,
     });
   }, [form, profileData]);
   return (
@@ -63,10 +77,10 @@ const StepBasicInfo = ({ form }: { form: any }) => {
         label="Date of Birth"
         name="dateOfBirth"
         rules={[
-          {
-            required: true,
-            message: "Please select your date of birth",
-          },
+          // {
+          //   required: true,
+          //   message: "Please select your date of birth",
+          // },
           {
             //@ts-ignore
             validator: (_, value) => {
@@ -86,11 +100,7 @@ const StepBasicInfo = ({ form }: { form: any }) => {
         <DatePicker className="w-full" />
       </Form.Item>
 
-      <Form.Item
-        label="Height"
-        name="height"
-        rules={[{ required: true, message: "Please select your height" }]}
-      >
+      <Form.Item label="Height" name="height">
         <Select placeholder="Select height">
           {heightConstant.map((h) => (
             <Select.Option key={h.value} value={h.value}>
@@ -100,11 +110,7 @@ const StepBasicInfo = ({ form }: { form: any }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        label="Body Type"
-        name="bodyType"
-        rules={[{ required: true, message: "Please select your body type" }]}
-      >
+      <Form.Item label="Body Type" name="bodyType">
         <Select placeholder="Select Body Type">
           {bodyTypeOptionConstant.map((h) => (
             <Select.Option key={h.value} value={h.value}>
@@ -114,14 +120,7 @@ const StepBasicInfo = ({ form }: { form: any }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        label="Full Address"
-        name="fullAddress"
-        rules={[
-          { required: true, message: "Please enter your full Address" },
-          { min: 5, message: "Full Address must be at least 5 characters" },
-        ]}
-      >
+      <Form.Item label="Full Address" name="fullAddress">
         <Input placeholder="Enter your full address" />
       </Form.Item>
     </Form>

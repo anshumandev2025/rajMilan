@@ -22,14 +22,6 @@ const RecentMatchesCard: React.FC<RecentMatchesCardProps> = ({ profiles }) => {
           <MatchProfileCard key={profile._id} profile={profile} />
         ))}
       </div>
-
-      {/* <div className="border-t border-gray-100 bg-gray-50 mt-6 pt-4">
-        <Link href="/feed" className="w-full block">
-          <Button type="link" className="w-full text-primary">
-            See All Matches <ArrowRightOutlined className="ml-1" />
-          </Button>
-        </Link>
-      </div> */}
     </Card>
   );
 };

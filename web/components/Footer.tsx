@@ -8,7 +8,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-1">
             <Link href="/" className="flex items-center space-x-2">
               <span className="text-2xl font-bold text-primary font-playfair">
-                Rajput<span className="text-secondary">Milan</span>
+                Raj<span className="text-secondary">Milan</span>
               </span>
             </Link>
             <p className="mt-4 text-gray-600">
@@ -85,7 +85,7 @@ const Footer = () => {
           <div className="col-span-1">
             <h3 className="font-medium text-lg mb-4">Contact Us</h3>
             <ul className="space-y-2">
-              <li className="text-gray-600">Email: info@rajputvivah.com</li>
+              <li className="text-gray-600">Email: info@rajmilan.com</li>
               <li className="text-gray-600">Phone: +91 1234567890</li>
               <li className="text-gray-600">
                 Address: Jaipur, Rajasthan, India
@@ -96,7 +96,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-200 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 text-sm">
-            &copy; {new Date().getFullYear()} RajputVivah. All rights reserved.
+            &copy; {new Date().getFullYear()} RajMilan. All rights reserved.
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-gray-600 hover:text-primary">

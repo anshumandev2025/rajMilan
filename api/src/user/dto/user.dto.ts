@@ -1,6 +1,5 @@
 import {
   IsDateString,
-  IsEmpty,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -16,54 +15,55 @@ export class AddUpdateUserDetailsDTO {
   @IsString()
   gender: string;
 
-  @IsNotEmpty()
-  @IsDateString()
+  @IsOptional()
+  @IsString()
   dateOfBirth: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   height: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   fullAddress: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   bodyType: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   educationLevel: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   degreeOrSpecialialization: string;
-  @IsNotEmpty()
+
+  @IsOptional()
   @IsString()
   companyOrOrganization: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   jobTitleOrDesignation: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   jobProfile: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   anualIncome: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   dietPreference: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   smokingHabit: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   drinkingHabit: string;
 
@@ -71,115 +71,107 @@ export class AddUpdateUserDetailsDTO {
   @IsString()
   aboutHobbyOrInterset: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   fatherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   fatherOccupation: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   fatherGotra: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   motherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   motherOccupation: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   motherGotra: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   paternalGrandfatherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   paternalGrandfatherOccupation: string;
 
-  @IsNotEmpty()
-  @IsString()
-  paternalGrandfatherGotra: string;
-
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   paternalGrandmotherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   paternalGrandmotherGotra: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   maternalGrandfatherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   maternalGrandfatherOccupation: string;
 
-  @IsNotEmpty()
-  @IsString()
-  maternalGrandfatherGotra: string;
-
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   maternalGrandmotherName: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   maternalGrandmotherGotra: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   paternalVillage: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   maternalVillage: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   gotra: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   siblingsCount: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   familyType: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   familyValues: string;
 
-  @IsString()
+  @IsOptional()
   @IsOptional()
   aboutFamilyBackground: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   partnerPreferedBodyType: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   partnerPreferedSubCast: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   partnerPreferedCity: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   partnerPreferedEducationLevel: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   partnerPreferedProfession: string;
 

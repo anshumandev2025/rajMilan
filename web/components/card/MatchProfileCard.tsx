@@ -10,6 +10,7 @@ export interface Profile {
   subCast: string;
   profession: string;
   profileImage: string;
+  gender: string;
 }
 
 interface MatchProfileCardProps {
@@ -21,7 +22,13 @@ const MatchProfileCard: React.FC<MatchProfileCardProps> = ({ profile }) => {
     <div className="bg-white rounded-lg border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-shadow">
       <div className="h-48 overflow-hidden">
         <img
-          src={profile.profileImage}
+          src={
+            profile.profileImage
+              ? profile.profileImage
+              : profile.gender == "male"
+              ? "/images/dummyGroom.png"
+              : "/images/dummyBride.png"
+          }
           alt={profile.fullName}
           className="w-full h-full object-cover"
         />

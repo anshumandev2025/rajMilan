@@ -4,7 +4,7 @@ import { Avatar, Dropdown, MenuProps } from "antd";
 import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { usePathname, useRouter } from "next/navigation";
 import Footer from "@/components/Footer";
-import { HeartHandshake, Users } from "lucide-react";
+import { HeartHandshake, Home } from "lucide-react";
 import apiClient from "@/utils/apiClient";
 import { useProfileStore } from "@/store/profileStore";
 import { useUser } from "@/store/userStore";
@@ -22,15 +22,12 @@ export default function RootLayout({
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token && token.length > 0) {
-      console.log("prolefilData---->", profileData);
-      if (!profileData.isProfileCompleted) {
-        router.replace("/profile-setup");
-      }
       setIsUserLogIn(true);
     } else {
+      setIsUserLogIn(false);
       router.replace("/");
     }
-  }, [isUserLogIn, profileData, pathname]);
+  }, [profileData, pathname]);
   useEffect(() => {
     const handleResize = () => {
       setScreenSize(window.innerWidth);
@@ -43,6 +40,11 @@ export default function RootLayout({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   const menuItems: MenuProps["items"] = [
+    {
+      key: "home",
+      label: "Home",
+      icon: <Home size={18} />,
+    },
     {
       key: "matches",
       label: "Matches",
@@ -73,7 +75,11 @@ export default function RootLayout({
     try {
       const response = await apiClient("/user");
       updateProfile(response.data);
-    } catch (error) {
+    } catch (error: any) {
+      if (error?.response?.status == 401) {
+        localStorage.removeItem("authToken");
+        router.replace("/");
+      }
       setIsUserLogIn(false);
       console.log("error-->", error);
     }
@@ -83,6 +89,9 @@ export default function RootLayout({
   }, []);
   const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
     switch (key) {
+      case "home":
+        router.push("/");
+        break;
       case "profile":
         router.push("/my-profile");
         break;
@@ -116,7 +125,10 @@ export default function RootLayout({
           <div className="relative flex justify-between items-center px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4">
             {/* Logo Section - Responsive */}
             <div className="flex items-center">
-              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white font-playfair tracking-wide">
+              <h1
+                onClick={() => router.push("/")}
+                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white font-playfair tracking-wide cursor-pointer"
+              >
                 RajMilan
               </h1>
             </div>
@@ -133,7 +145,9 @@ export default function RootLayout({
                 {isUserLogIn && (
                   <Avatar
                     size={screenSize < 640 ? 32 : screenSize < 768 ? 36 : 40}
-                    src={`${profileData?.profileImage}?timestamp=${new Date().getTime()}`}
+                    src={`${
+                      profileData?.profileImage
+                    }?timestamp=${new Date().getTime()}`}
                     icon={<UserOutlined />}
                     className="relative border-2 border-white/30 hover:border-white/60 transition-all duration-300 hover:scale-105 shadow-lg"
                     style={{

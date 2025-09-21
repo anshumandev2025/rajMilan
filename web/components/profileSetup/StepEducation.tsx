@@ -8,8 +8,6 @@ import {
 } from "@/constants/dataConstant";
 import { useProfileStore } from "@/store/profileStore";
 
-const { Option } = Select;
-
 const StepEducation = ({ form }: { form: any }) => {
   const { profileData } = useProfileStore();
   useEffect(() => {
@@ -24,18 +22,34 @@ const StepEducation = ({ form }: { form: any }) => {
     form.setFieldsValue({
       educationLevel: educationLevel
         ? educationLevel
-        : profileData.educationLevel,
+        : profileData.educationLevel
+        ? profileData.educationLevel
+        : null,
       degreeOrSpecialialization: degreeOrSpecialialization
         ? degreeOrSpecialialization
-        : profileData.degreeOrSpecialialization,
-      jobProfile: jobProfile ? jobProfile : profileData.jobProfile,
+        : profileData.degreeOrSpecialialization
+        ? profileData.degreeOrSpecialialization
+        : null,
+      jobProfile: jobProfile
+        ? jobProfile
+        : profileData.jobProfile
+        ? profileData.jobProfile
+        : null,
       jobTitleOrDesignation: jobTitleOrDesignation
         ? jobTitleOrDesignation
-        : profileData.jobTitleOrDesignation,
+        : profileData.jobTitleOrDesignation
+        ? profileData.jobTitleOrDesignation
+        : null,
       companyOrOrganization: companyOrOrganization
         ? companyOrOrganization
-        : profileData.companyOrOrganization,
-      anualIncome: anualIncome ? anualIncome : profileData.anualIncome,
+        : profileData.companyOrOrganization
+        ? profileData.companyOrOrganization
+        : null,
+      anualIncome: anualIncome
+        ? anualIncome
+        : profileData.anualIncome
+        ? profileData.anualIncome
+        : null,
     });
   }, [form, profileData]);
   return (
@@ -44,9 +58,9 @@ const StepEducation = ({ form }: { form: any }) => {
       <Form.Item
         label="Education Level"
         name="educationLevel"
-        rules={[
-          { required: true, message: "Please select your education level" },
-        ]}
+        // rules={[
+        //   { required: true, message: "Please select your education level" },
+        // ]}
       >
         <Select placeholder="Select education level">
           {educationLevelsConstant.map((level) => (
@@ -58,28 +72,11 @@ const StepEducation = ({ form }: { form: any }) => {
       </Form.Item>
 
       {/* Degree */}
-      <Form.Item
-        label="Degree/Specialization"
-        name="degreeOrSpecialialization"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your degree or specialization",
-          },
-          {
-            min: 2,
-            message: "Degree must be at least 2 characters long",
-          },
-        ]}
-      >
+      <Form.Item label="Degree/Specialization" name="degreeOrSpecialialization">
         <Input placeholder="e.g., B.Tech Computer Science, MBA Finance" />
       </Form.Item>
 
-      <Form.Item
-        label="Job Profile"
-        name="jobProfile"
-        rules={[{ required: true, message: "Please select your job profile" }]}
-      >
+      <Form.Item label="Job Profile" name="jobProfile">
         <Select placeholder="Select job profile">
           {jobProfileOptionConstant.map((range) => (
             <Select.Option key={range.value} value={range.value}>
@@ -89,47 +86,17 @@ const StepEducation = ({ form }: { form: any }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item
-        label="Job Title/Designation"
-        name="jobTitleOrDesignation"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your job title or designation",
-          },
-          {
-            min: 2,
-            message: "Job title must be at least 2 characters",
-          },
-        ]}
-      >
+      <Form.Item label="Job Title/Designation" name="jobTitleOrDesignation">
         <Input placeholder="Enter your job title" />
       </Form.Item>
 
       {/* Company */}
-      <Form.Item
-        label="Company/Organization"
-        name="companyOrOrganization"
-        rules={[
-          {
-            required: true,
-            message: "Please enter your company or organization name",
-          },
-          {
-            min: 2,
-            message: "Company name must be at least 2 characters",
-          },
-        ]}
-      >
+      <Form.Item label="Company/Organization" name="companyOrOrganization">
         <Input placeholder="Enter your company name" />
       </Form.Item>
 
       {/* Annual Income */}
-      <Form.Item
-        label="Annual Income"
-        name="anualIncome"
-        rules={[{ required: true, message: "Please select your income range" }]}
-      >
+      <Form.Item label="Annual Income" name="anualIncome">
         <Select placeholder="Select income range">
           {incomeRangesConstant.map((range) => (
             <Select.Option key={range.value} value={range.value}>

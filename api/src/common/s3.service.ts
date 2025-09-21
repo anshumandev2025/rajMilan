@@ -49,8 +49,8 @@ export class S3Service {
    */
   async uploadFile(
     file: Buffer | Express.Multer.File,
-    folder: string = 'uploads',
     customFilename?: string,
+    folder: string = 'uploads',
   ): Promise<{ url: string; key: string }> {
     if (!file) {
       throw new BadRequestException('File is required');

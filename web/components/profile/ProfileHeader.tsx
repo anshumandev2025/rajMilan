@@ -24,7 +24,7 @@ interface Props {
   loading?: boolean;
   profileFileList?: UploadFile[];
   onProfileImageChange?: UploadProps["onChange"];
-  //   onPreview: (file: UploadFile) => void;
+  bioData?: string;
 }
 
 const ProfileHeader: React.FC<Props> = ({
@@ -52,19 +52,24 @@ const ProfileHeader: React.FC<Props> = ({
       <div className="flex items-center mb-4 md:mb-0">
         <div className="relative">
           {isUserLogIn && (
-            <Avatar
-              size={80}
-              src={`${profileImage}?timestamp=${new Date().getTime()}`}
-              icon={<UserOutlined />}
-              className="mr-4 border-4 border-white shadow-lg"
-            />
+            <>
+              <Avatar
+                size={80}
+                src={
+                  profileImage?.startsWith("data:")
+                    ? profileImage
+                    : `${profileImage}?timestamp=${new Date().getTime()}`
+                }
+                icon={<UserOutlined />}
+                className="mr-4 border-4 border-white shadow-lg"
+              />
+            </>
           )}
           {isEditMode && (
             <Upload
               listType="picture-circle"
               fileList={profileFileList}
               onChange={onProfileImageChange}
-              //   onPreview={onPreview}
               maxCount={1}
               className="absolute -bottom-3 right-1"
               showUploadList={false}
@@ -82,15 +87,21 @@ const ProfileHeader: React.FC<Props> = ({
         <div>
           <h1 className="text-3xl font-bold mb-2">{fullName}</h1>
           <div className="flex flex-wrap gap-2">
-            <Tag color="#ffd602" className="text-black font-medium">
-              {gender}
-            </Tag>
-            <Tag color="#ffd602" className="text-black font-medium">
-              Age: {age}
-            </Tag>
-            <Tag color="#ffd602" className="text-black font-medium">
-              {height}
-            </Tag>
+            {gender && (
+              <Tag color="#ffd602" className="text-black font-medium">
+                {gender}
+              </Tag>
+            )}
+            {age && (
+              <Tag color="#ffd602" className="text-black font-medium">
+                Age: {age}
+              </Tag>
+            )}
+            {height && (
+              <Tag color="#ffd602" className="text-black font-medium">
+                {height}
+              </Tag>
+            )}
           </div>
         </div>
       </div>

@@ -1,6 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Card, Form, Input, Select, Checkbox, Button, Typography } from "antd";
+import {
+  Card,
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  Button,
+  Typography,
+  message,
+} from "antd";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/homePage/Navbar";
 import Link from "next/link";
@@ -27,6 +36,7 @@ const Signup = () => {
       setIsLoading(true);
       const response = await apiClient.post(`/auth/userSignUp`, values);
       router.push("/auth/login");
+      message.success("You are register successfully please login!");
     } catch (error: any) {
       console.log("error-->", error);
       errorToast(error.response.data.message);
@@ -46,7 +56,7 @@ const Signup = () => {
             <div className="hidden md:flex flex-col justify-center">
               <div className="space-y-4">
                 <Title level={2} className="text-primary font-playfair">
-                  Join RajputMilan
+                  Join RajMilan
                 </Title>
                 <Paragraph className="text-lg text-gray-600">
                   Create your profile to connect with suitable matches from the

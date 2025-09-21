@@ -9,7 +9,7 @@ const Testimonials = () => {
             Success Stories
           </h2>
           <p className="text-lg text-gray-600">
-            Hear from couples who found their perfect match on RajputVivah
+            Hear from couples who found their perfect match on RajMilan
           </p>
         </div>
 
@@ -27,7 +27,7 @@ const Testimonials = () => {
             <div className="flex flex-col h-full">
               <blockquote className="flex-grow">
                 <p className="text-gray-600 italic">
-                  "RajputVivah helped us find each other despite living in
+                  "RajMilan helped us find each other despite living in
                   different states. The platform's focus on Rajput traditions
                   made our families comfortable from the very beginning."
                 </p>

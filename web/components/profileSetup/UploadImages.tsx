@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Upload, message, Form, Modal } from "antd";
-import type { UploadFile, UploadProps } from "antd/es/upload/interface";
+import type { UploadFile } from "antd/es/upload/interface";
 import {
   PlusOutlined,
   CameraOutlined,
@@ -147,7 +147,7 @@ const UploadImages = ({ form }: { form: any }) => {
             Add Gallery Images
           </div>
           <div className="text-xs text-gray-500">
-            Upload up to {5 - galleryPics.length} more images
+            Upload up to {5 - galleryPics?.length} more images
           </div>
         </div>
         <div className="px-3 py-1 bg-amber-500 text-white text-xs font-medium rounded-full">
@@ -181,17 +181,11 @@ const UploadImages = ({ form }: { form: any }) => {
       <Form layout="vertical" form={form}>
         {/* Profile Picture Section */}
         <Form.Item
-          rules={[
-            { required: true, message: "Please upload a profile picture." },
-          ]}
           label={
             <div className="flex items-center gap-2 mb-4">
               <CameraOutlined className="text-lg text-amber-600" />
               <span className="text-base font-semibold text-gray-800">
                 Profile Picture
-              </span>
-              <span className="text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full font-medium">
-                Required
               </span>
             </div>
           }
@@ -217,10 +211,7 @@ const UploadImages = ({ form }: { form: any }) => {
           rules={[
             {
               validator: async (_, value) => {
-                if (!value || value.length < 2) {
-                  throw new Error("Please upload at least 2 gallery images.");
-                }
-                if (value.length > 5) {
+                if (value && value.length > 5) {
                   throw new Error(
                     "You can upload a maximum of 5 gallery images."
                   );
@@ -235,7 +226,7 @@ const UploadImages = ({ form }: { form: any }) => {
                 Gallery Images
               </span>
               <span className="text-xs px-2 py-1 bg-amber-100 text-amber-600 rounded-full font-medium">
-                {galleryPics.length}/5
+                {galleryPics?.length}/5
               </span>
             </div>
           }
@@ -263,9 +254,6 @@ const UploadImages = ({ form }: { form: any }) => {
               <FileTextOutlined className="text-lg text-amber-600" />
               <span className="text-base font-semibold text-gray-800">
                 Bio Data PDF
-              </span>
-              <span className="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded-full font-medium">
-                Optional
               </span>
             </div>
           }
