@@ -331,13 +331,6 @@ const page = () => {
           </h1>
           <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
             <DisplayField
-              label="Partner Prefered Body Type"
-              field="partnerPreferedBodyType"
-              value={profileData.partnerPreferedBodyType}
-              isEditMode={false}
-            />
-
-            <DisplayField
               label="Partner SubCast"
               field="partnerPreferedSubCast"
               value={profileData.partnerPreferedSubCast}

@@ -54,7 +54,6 @@ export const initialProfileData = {
   paternalVillage: "",
   maternalVillage: "",
   gotra: "",
-  partnerPreferedBodyType: "",
   bioDataPdf: "",
   jobProfile: "",
 };

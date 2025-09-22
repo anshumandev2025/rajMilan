@@ -157,10 +157,6 @@ export class AddUpdateUserDetailsDTO {
 
   @IsOptional()
   @IsString()
-  partnerPreferedBodyType: string;
-
-  @IsOptional()
-  @IsString()
   partnerPreferedSubCast: string;
 
   @IsOptional()

@@ -11,11 +11,13 @@ import UploadImages from "@/components/profileSetup/UploadImages";
 import Footer from "@/components/Footer";
 import apiClient from "@/utils/apiClient";
 import { useRouter } from "next/navigation";
+import { useProfileStore } from "@/store/profileStore";
 
 const Page = () => {
   const [current, setCurrent] = useState(0);
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { updateProfile } = useProfileStore();
   // Create form instances for each step
   const [basicForm] = Form.useForm();
   const [educationForm] = Form.useForm();
@@ -104,7 +106,11 @@ const Page = () => {
       // Append regular fields
       Object.entries(allValues).forEach(([key, value]) => {
         if (key !== "profileImage" && key !== "galleryImages") {
-          formData.append(key, value);
+          if (value) {
+            formData.append(key, value);
+          } else {
+            formData.append(key, "");
+          }
         }
       });
 
@@ -126,12 +132,12 @@ const Page = () => {
       }
 
       // Make API request
-      await apiClient.put("/user/addDetails", formData, {
+      const response = await apiClient.put("/user/addDetails", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
+      updateProfile(response.data);
       message.success("Profile completed successfully!");
       router.push("/matches");
     } catch (error) {
@@ -187,7 +193,6 @@ const Page = () => {
           )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

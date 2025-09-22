@@ -696,18 +696,6 @@ const ProfilePage: React.FC = () => {
             </h1>
             <div className="grid grid-col-1 md:grid-cols-2 gap-x-16 gap-y-8">
               <DisplayField
-                label="Partner Prefered Body Type"
-                field="partnerPreferedBodyType"
-                value={editedData.partnerPreferedBodyType}
-                isEditMode={isEditMode}
-                type="select"
-                options={bodyTypeOptionConstant}
-                onChange={
-                  handleInputChange as (field: string, value: string) => void
-                }
-              />
-
-              <DisplayField
                 label="Partner SubCast"
                 field="partnerPreferedSubCast"
                 value={editedData.partnerPreferedSubCast}

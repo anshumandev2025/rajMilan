@@ -19,7 +19,6 @@ const StepPreferences = ({ form }: { form: any }) => {
   const { profileData } = useProfileStore();
   useEffect(() => {
     const {
-      partnerPreferedBodyType,
       partnerPreferedSubCast,
       partnerPreferedCity,
       partnerPreferedEducationLevel,
@@ -27,11 +26,6 @@ const StepPreferences = ({ form }: { form: any }) => {
       partnerAdditionalPreference,
     } = form.getFieldsValue();
     form.setFieldsValue({
-      partnerPreferedBodyType: partnerPreferedBodyType
-        ? partnerPreferedBodyType
-        : profileData.partnerPreferedBodyType
-        ? profileData.partnerPreferedBodyType
-        : null,
       partnerPreferedSubCast: partnerPreferedSubCast
         ? partnerPreferedSubCast
         : profileData.partnerPreferedSubCast
@@ -61,26 +55,8 @@ const StepPreferences = ({ form }: { form: any }) => {
   }, [form, profileData]);
   return (
     <Form layout="vertical" form={form}>
-      <Form.Item
-        label="Partner Prefered Body Type"
-        name="partnerPreferedBodyType"
-      >
-        <Select placeholder="Select body type">
-          {bodyTypeOptionConstant.map((h) => (
-            <Select.Option key={h.value} value={h.value}>
-              {h.label}
-            </Select.Option>
-          ))}
-        </Select>
-      </Form.Item>
       <Form.Item label="Preferred Caste" name="partnerPreferedSubCast">
-        <Select placeholder="Select caste">
-          {casteOptionsConstant.map((option) => (
-            <Select.Option key={option.value} value={option.value}>
-              {option.label}
-            </Select.Option>
-          ))}
-        </Select>
+        <Input placeholder="Enter partner prefered sub caste" />
       </Form.Item>
 
       <Form.Item label="Preferred City/Region" name="partnerPreferedCity">

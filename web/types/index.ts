@@ -54,7 +54,6 @@ export type ProfileData = {
   paternalVillage: string;
   maternalVillage: string;
   gotra: string;
-  partnerPreferedBodyType: string;
   bioDataPdf: string;
   jobProfile: string;
 };

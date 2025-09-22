@@ -126,9 +126,6 @@ export class User extends Document {
   aboutFamilyBackground: string;
 
   @Prop()
-  partnerPreferedBodyType: string;
-
-  @Prop()
   partnerPreferedSubCast: string;
 
   @Prop()
